@@ -20,7 +20,7 @@ function handleTextFieldChange(e) {
     textFieldValue: e.target.value
   });
 }
-async function handleStore(e, contract, accounts) {
+async function simulateLocal(e, contract, accounts) {
   e.preventDefault();
   console.log("Storage action.");
   console.log("before read params");
@@ -31,19 +31,23 @@ async function handleStore(e, contract, accounts) {
   console.log("after read_params in run example");
 
   // Stores a given value, 5 by default.
-  await contract.methods
+  /*await contract.methods
     .store_params([
-      [2, 3],
-      [1, 2]
+      [
+        [2, 3],
+        [1, 2]
+      ]
     ])
     .send({ from: accounts[0], gas: 3000000 });
   console.log("Client 0 stored parameters [[2,3],[1,2]]");
   await contract.methods
     .store_params([
-      [20, 30],
-      [11, 200]
+      [
+        [20, 30],
+        [11, 200]
+      ]
     ])
-    .send({ from: accounts[1], gas: 3000000 });
+    .send({ from: accounts[1], gas: 3000000 });*/
   console.log("Client 1 stored parameters [[20,30],[11,200]]");
 }
 
@@ -58,9 +62,9 @@ async function handleDisplay(e, contract, accounts) {
   const response = val1 + " " + val2 + " " + val3 + " " + val4;
   console.log(res_array);
 }
-async function handleAggregate(e, contract, accounts) {
+async function simulateFederated(e, contract, accounts) {
   e.preventDefault();
-  console.log("Aggregate action");
+  console.log("Federation happening.");
   // Get the value from the contract to prove it worked.
   await contract.methods.run_agg().send({ from: accounts[3], gas: 3000000 });
 }
@@ -85,13 +89,13 @@ function ClientField(props) {
                 size="small"
                 style={{
                   maxWidth: "100px",
-                  maxHeight: "30px",
+                  maxHeight: "40px",
                   minWidth: "100px",
-                  minHeight: "30px"
+                  minHeight: "40px"
                 }}
-                onClick={e => handleStore(e, props.instance, props.accounts)}
+                onClick={e => simulateLocal(e, props.instance, props.accounts)}
               >
-                Run local
+                Simulate Local
               </Button>
             </CardContent>
             <CardContent>
@@ -100,15 +104,15 @@ function ClientField(props) {
                 size="small"
                 style={{
                   maxWidth: "100px",
-                  maxHeight: "30px",
+                  maxHeight: "40px",
                   minWidth: "100px",
-                  minHeight: "30px"
+                  minHeight: "40px"
                 }}
                 onClick={e =>
-                  handleAggregate(e, props.instance, props.accounts)
+                  simulateFederated(e, props.instance, props.accounts)
                 }
               >
-                Federate
+                Simulate Federated
               </Button>
             </CardContent>
             <CardContent>
@@ -116,13 +120,13 @@ function ClientField(props) {
                 variant="contained"
                 style={{
                   maxWidth: "100px",
-                  maxHeight: "30px",
+                  maxHeight: "40px",
                   minWidth: "100px",
-                  minHeight: "30px"
+                  minHeight: "40px"
                 }}
                 onClick={e => handleDisplay(e, props.instance, props.accounts)}
               >
-                Display
+                Submit Data
               </Button>
             </CardContent>
           </Grid>

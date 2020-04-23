@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "/Users/omar_rifai/workspace/truffle/venv/bin/python3",
+    "python.formatting.provider": "black"
+}

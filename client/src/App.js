@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
-import Aggregator from "./contracts/Aggregator.json";
+import Federation from "./contracts/Federation.json";
 import getWeb3 from "./getWeb3";
 import ContractField from "./ContractField";
 import { Grid, GridList, Typography } from "@material-ui/core";
-
 import "./App.css";
+import Dropzone from "react-dropzone";
 
 class App extends Component {
   state = {
@@ -15,7 +15,9 @@ class App extends Component {
     contract: null,
     currentTime: 0
   };
-
+  onDrop = acceptedFiles => {
+    console.log(acceptedFiles);
+  };
   componentDidMount = async () => {
     try {
       // Get network provider and web3 instance.
@@ -27,9 +29,9 @@ class App extends Component {
       console.log("my accounts:", accounts);
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = Aggregator.networks[networkId];
+      const deployedNetwork = Federation.networks[networkId];
       const instance = new web3.eth.Contract(
-        Aggregator.abi,
+        Federation.abi,
         deployedNetwork && deployedNetwork.address
       );
 
@@ -63,10 +65,24 @@ class App extends Component {
         <GridList cols={100} cellHeight="auto">
           <Grid cols={100}>
             <ContractField
-              name="Aggregator"
+              name="Federation"
               instance={this.state.contract}
               accounts={this.state.accounts}
             ></ContractField>
+          </Grid>
+          <Grid>
+            <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
+              {({ getRootProps, getInputProps }) => (
+                <section>
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <p>
+                      Drag 'n' drop some files here, or click to select files
+                    </p>
+                  </div>
+                </section>
+              )}
+            </Dropzone>
           </Grid>
         </GridList>
       </div>
