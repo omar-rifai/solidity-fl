@@ -159,8 +159,3 @@ def sigmoid(z):
 def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
     return sigmoid(z)*(1-sigmoid(z))
-
-def toList(self):
-    self.weights = [w.tolist() for w in self.weights]
-    self.biases = [b.tolist() for b in self.biases]
-    return json.dumps([self.num_layers,self.sizes, self.weights, self.biases])

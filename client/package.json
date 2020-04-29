@@ -12,10 +12,11 @@
     "react-dom": "16.11.0",
     "react-dropzone": "^10.2.2",
     "react-scripts": "^3.4.1",
+    "recharts": "^1.8.5",
     "truffle-hdwallet-provider": "^1.0.17",
     "web3": "1.2.2"
   },
-  "proxy": "http://127.0.0.1:5000",
+  "proxy": "http://localhost:5000/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -30,7 +30,7 @@ class App extends Component {
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = Federation.networks[networkId];
-      const instance = new web3.eth.Contract(
+      const instance = await new web3.eth.Contract(
         Federation.abi,
         deployedNetwork && deployedNetwork.address
       );
@@ -57,13 +57,15 @@ class App extends Component {
         className="App"
         style={{
           display: "flex",
+          //flex: "none",
           justifyContent: "center",
           alignItems: "center",
-          height: "100vh"
+          paddingTop: "25px"
+          //width: "200vh"
         }}
       >
-        <GridList cols={100} cellHeight="auto">
-          <Grid cols={100}>
+        <GridList cellHeight="auto" cols={1}>
+          <Grid>
             <ContractField
               name="Federation"
               instance={this.state.contract}
