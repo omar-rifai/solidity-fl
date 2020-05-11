@@ -1,10 +1,18 @@
 # solidity-fl
-MIT License
 
-Copyright (c) 2012-2018 Michael Nielsen
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+This is a prototype for running a federated learning algorithm using an Ethereum Smart Contract. The prototype has been implemented using Ganache and the truffle suite and a Python Flask backend server for simulations.
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+For client side libraries installation go to the client folder and type
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+npm install 
+
+the project can be started (after installing the required dependencies specified above) by calling
+
+npm start for starting a react client
+
+flask run for the backend server and
+
+truffle compile; truffle migrate for the smart contracts
+
+
