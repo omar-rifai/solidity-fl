@@ -5,14 +5,19 @@ This is a prototype for running a federated learning algorithm using an Ethereum
 
 For client side libraries installation go to the client folder and type
 
-npm install 
+>npm install 
 
 the project can be started (after installing the required dependencies specified above) by calling
 
-npm start for starting a react client
+>npm start 
+to start a react client
 
-flask run for the backend server and
+>flask run
 
-truffle compile; truffle migrate for the smart contracts
+for the backend server and
+
+>truffle compile; truffle migrate
+
+for the smart contracts
 
 
