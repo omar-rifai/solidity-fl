@@ -9,7 +9,7 @@ import data_processing as dp
 n_simulations = 1
 n_global_updates = 1
 n_local_updates = 10
-n_edges = 4
+n_edges = 10
 
 federate = 0
 
@@ -80,11 +80,25 @@ def run_broadcast(agg_weights, agg_biases, edge_nets):
 
 def write_network(net):
     json_net = {}
-    json_net["weights"] = [dp.toInt(w.tolist()) for w in net.weights]
-    json_net["biases"] = [dp.toInt(b.tolist()) for b in net.biases]
+    json_net["weights"] = [w.tolist() for w in net.weights]
+    json_net["biases"] = [b.tolist() for b in net.biases]
     json_net["num_layers"] = net.num_layers
     json_net["sizes"] = net.sizes
     return json_net
+
+
+def read_network(net_dict):
+    net_weights = net_dict["weights"]
+    net_biases = net_dict["biases"]
+    n_inputs_network = net_dict["sizes"][0]
+    n_outputs_network = net_dict["sizes"][-1]
+    hidden_layers_sizes = [net_dict["sizes"][i]
+                           for i in range(1, net_dict["num_layers"]-1)]
+    ret = nn.Network(
+        [n_inputs_network, *hidden_layers_sizes, n_outputs_network])
+    ret.weights = dp.toNpArray(net_weights)
+    ret.biases = dp.toNpArray(net_biases)
+    return ret
 
 
 def main():

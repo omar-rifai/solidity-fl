@@ -5,6 +5,7 @@ import time
 from flask import Flask
 import controler
 import sys
+import json
 import network as nn
 from flask import request
 from pymongo import MongoClient
@@ -21,9 +22,10 @@ db = client.nnetworks  # Select the database
 def call_init():
     s = 123
     n_global_updates = 1
-    n_local_updates = 10
+    n_edges = 15
+    n_local_updates = 30
     testing_data, edge_nets, edge_data = controler.setup_simulation(s)
-    results_scenario = [[] for e in range(len(edge_nets))]
+    results_scenario = [[] for e in range(n_edges)]
     db.params.update({'s': s}, {'s': s, 'n_global_updates': n_global_updates,
                                 'n_local_updates': n_local_updates}, upsert=True)
     db.networks.update({'s': s},
@@ -46,11 +48,20 @@ def runStageAPI():
     db_data = db.data.find_one({'s': s})
 
     n_global_updates = db_params["n_global_updates"]
-    n_local_updates = db_param["n_local_updates"]
-    edges_nets = db_edges["edge_nets"]
-    testing_data = db_data
+    n_local_updates = db_params["n_local_updates"]
+    edge_nets_list = db_edges["edge_nets"]
+    edge_data = db_edges["edge_data"][0]
 
-    #testing_data, edge_nets, edge_data = controler.setup_simulation(s)
+    testing_data = db_data["testing_data"]
+
+    # convert list of lists to list of networks
+    edge_nets = []
+    for e in edge_nets_list:
+        edge_nets.append(controler.read_network(e))
+    for i in range(len(edge_data)):
+        edge_data[i] = [(np.array(x[0]), np.array(x[1])) for x in edge_data[i]]
+
+    # testing_data, edge_nets, edge_data = controler.setup_simulation(s)
     results_scenario = [[] for e in range(len(edge_nets))]
 
     results_scenario = controler.run_stage(
@@ -64,8 +75,8 @@ def runStageAPI():
     net_weights = [e["weights"] for e in list_nets]
     net_biases = [e["biases"] for e in list_nets]
 
-    return{'weights': net_weights,
-           'biases': net_biases}
+    return{'weights': [dp.toInt(w) for w in net_weights],
+           'biases': [dp.toInt(b) for b in net_biases]}
 
 
 @app.route('/post_params', methods=['GET', 'POST'])
@@ -73,9 +84,21 @@ def submitParamsAPI():
     s = 123
     db_networks = db.networks.find_one({"s": s})
     edge_nets = db_networks["edge_nets"]
+    edge_data = db_networks["edge_data"]
+    body_data = request.get_json(force=True)
+
+    res_weights = json.loads(body_data["weights"])
+    res_biases = json.loads(body_data["biases"])
+
     for e in range(len(edge_nets)):
-        edge_nets[e]["weights"] = request.args["weights"]
-        edge_nets[e]["biases"] = request.args["biases"]
+        edge_nets[e]["weights"] = [dp.toFloat(
+            w) for w in res_weights]
+        edge_nets[e]["biases"] = [dp.toFloat(w)
+                                  for w in res_biases]
+        print(edge_nets[0]["weights"])
+        print([dp.toFloat(w) for w in res_weights])
+        db.networks.update({'s': s},
+                           {'s': s, 'edge_nets': [e for e in edge_nets], 'edge_data': edge_data}, upsert=True)
 
     return {'response': True}
 

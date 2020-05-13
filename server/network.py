@@ -9,12 +9,13 @@ simple, easily readable, and easily modifiable.  It is not optimized,
 and omits many desirable features.
 """
 
-#### Libraries
+# Libraries
 # Standard library
 import random
 import json
 # Third-party libraries
 import numpy as np
+
 
 class Network(object):
 
@@ -52,22 +53,23 @@ class Network(object):
         network will be evaluated against the test data after each
         epoch, and partial progress printed out.  This is useful for
         tracking progress, but slows things down substantially."""
-        if test_data: n_test = len(test_data)
+        if test_data:
+            n_test = len(test_data)
         n = len(training_data)
         np.random.seed(rs)
         accuracy = []
-        for j in range(epochs):  
+        for j in range(epochs):
             np.random.shuffle(training_data)
             mini_batches = [
                 training_data[k:k+mini_batch_size]
                 for k in range(0, n, mini_batch_size)]
             for mini_batch in mini_batches:
                 self.update_mini_batch(mini_batch, eta)
-        
+
             if test_data:
-                #print("Epoch {0}: {1} / {2}".format(j, self.evaluate(test_data), n_test))
+                # print("Epoch {0}: {1} / {2}".format(j, self.evaluate(test_data), n_test))
                 accuracy.append(self.evaluate(test_data)/n_test)
-            #else:
+            # else:
             #    print("Epoch {0} complete".format(j))
         return accuracy
 
@@ -96,8 +98,8 @@ class Network(object):
         nabla_w = [np.zeros(w.shape) for w in self.weights]
         # feedforward
         activation = x
-        activations = [x] # list to store all the activations, layer by layer
-        zs = [] # list to store all the z vectors, layer by layer
+        activations = [x]  # list to store all the activations, layer by layer
+        zs = []  # list to store all the z vectors, layer by layer
         for b, w in zip(self.biases, self.weights):
             z = np.dot(w, activation)+b
             zs.append(z)
@@ -127,9 +129,10 @@ class Network(object):
         network outputs the correct result. Note that the neural
         network's output is assumed to be the index of whichever
         neuron in the final layer has the highest activation."""
-        #test_results = [(np.argmax(self.feedforward(x)), y)
+        # test_results = [(np.argmax(self.feedforward(x)), y)
         #                for (x, y) in test_data]
-        test_results = [(np.round(self.feedforward(x))[0],y) for (x,y) in test_data]
+        test_results = [(np.round(self.feedforward(x))[0], y)
+                        for (x, y) in test_data]
         return sum(int(y_emp == y_true) for (y_emp, y_true) in test_results)
 
     def cost_derivative(self, output_activations, y):
@@ -140,8 +143,8 @@ class Network(object):
     def predict(self, x):
         # feedforward
         activation = x
-        activations = [x] # list to store all the activations, layer by layer
-        zs = [] # list to store all the z vectors, layer by layer
+        activations = [x]  # list to store all the activations, layer by layer
+        zs = []  # list to store all the z vectors, layer by layer
         for b, w in zip(self.biases, self.weights):
 
             z = np.dot(w, activation)+b
@@ -149,12 +152,20 @@ class Network(object):
             activation = sigmoid(z)
             activations.append(activation)
         return activation
-            
-#### Miscellaneous functions
+
+# Miscellaneous functions
+
+
 def sigmoid(z):
+    np.seterr(over='raise')
+    try:
+        ret = 1.0/(1.0+np.exp(-z))
+    except:
+        print(z)
+        ret = 1.0/(1.0 + np.round(-z))
     """The sigmoid function."""
-    return 1.0/(1.0+np.exp(-z))
-   
+    return ret
+
 
 def sigmoid_prime(z):
     """Derivative of the sigmoid function."""

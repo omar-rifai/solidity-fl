@@ -84,7 +84,7 @@ contract Federation {
     }
 
     function getAverage() internal view returns (int256) {
-        return ((total * toFloat) / counter);
+        return (total / counter);
     }
 
     function resetCounters() internal {

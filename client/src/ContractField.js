@@ -19,7 +19,16 @@ const useStyles = makeStyles({
   }
 });
 
-async function simulateLocal(e, contract, accounts, setState) {
+async function initializeState(e, contract, accounts) {
+  await fetch("/init")
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(console.log);
+}
+
+async function simulateLocal(e, contract, accounts, setState, count) {
   //e.preventDefault();
   console.log("Local stochastic gradient descent");
 
@@ -37,7 +46,7 @@ async function simulateLocal(e, contract, accounts, setState) {
     .then(data => {
       results = data;
     });
-  setState({ results: results });
+  setState(count + 1);
 }
 
 async function simulateFederated(e, contract, accounts) {
@@ -56,13 +65,36 @@ async function simulateFederated(e, contract, accounts) {
     .send({ gas: 5000000, from: accounts[0] });
   console.log("runagg:" + aggres);
 
-  const res = await contract.methods
+  const weight_res = await contract.methods
     .read_params()
     .call({ gas: 500000000, from: accounts[0] });
-  console.log(res);
+  console.log(weight_res);
+
+  for (var i = 0; i < 4; i++) {
+    await contract.methods
+      .store_params(params.biases[i])
+      .send({ from: accounts[i + 1], gas: 5000000 });
+  }
+
+  const aggres2 = await contract.methods
+    .run_agg()
+    .send({ gas: 500000000, from: accounts[0] });
+  console.log("runagg:" + aggres2);
+
+  const bias_res = await contract.methods
+    .read_params()
+    .call({ gas: 500000000, from: accounts[0] });
+  console.log(bias_res);
 
   let postres = [];
-  await fetch("/post_params?weights=" + res, { method: "POST" })
+
+  await fetch("/post_params", {
+    method: "POST",
+    body: JSON.stringify({
+      weights: JSON.stringify(weight_res),
+      biases: JSON.stringify(bias_res)
+    })
+  })
     .then(res => res.json())
     .then(data => {
       postres = data;
@@ -70,10 +102,10 @@ async function simulateFederated(e, contract, accounts) {
   console.log(postres);
 }
 
-function ClientField(props) {
-  let [_, setState] = useState();
-
+const ClientField = props => {
+  let [count, setState] = useState();
   const classes = useStyles();
+
   return (
     <Box border={0} borderColor="grey.500">
       <CardContent>
@@ -94,7 +126,7 @@ function ClientField(props) {
             margin: "10px"
           }}
           onClick={e =>
-            simulateLocal(e, props.instance, props.accounts, setState)
+            simulateLocal(e, props.instance, props.accounts, setState, count)
           }
         >
           Run Local
@@ -114,6 +146,21 @@ function ClientField(props) {
         >
           Federate
         </Button>
+
+        <Button
+          variant="contained"
+          size="small"
+          style={{
+            maxWidth: "100px",
+            maxHeight: "30px",
+            minWidth: "100px",
+            minHeight: "30px",
+            margin: "10px"
+          }}
+          onClick={e => initializeState(e, props.instance, props.accounts)}
+        >
+          Initialize
+        </Button>
       </CardContent>
       <CardContent
         style={{
@@ -123,10 +170,10 @@ function ClientField(props) {
           maxWidth: "400px"
         }}
       >
-        <Chart data={results}></Chart>
+        <Chart data={results} count={count}></Chart>
       </CardContent>
     </Box>
   );
-}
+};
 
 export default ClientField;

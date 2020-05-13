@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useDeepCompareEffect } from "react";
 import {
   LineChart,
   Line,
@@ -8,21 +8,22 @@ import {
   Tooltip,
   Legend
 } from "recharts";
-let data = [{}];
-function Results(props) {
+let local_data = [{}];
+const Results = ({ data, count }) => {
   // Similar to componentDidMount and componentDidUpdate:
 
   useEffect(() => {
-    console.log("charts props:", props);
-    if (props.data.length != 0) {
-      data = props.data.results;
+    console.log("charts props:", data);
+    if (data.length != 0) {
+      local_data = data.results;
     }
   });
+
   return (
     <LineChart
       width={500}
       height={300}
-      data={data}
+      data={data.results}
       margin={{
         top: 5,
         right: 30,
@@ -43,6 +44,6 @@ function Results(props) {
       />
     </LineChart>
   );
-}
+};
 
 export default Results;

@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from numbers import Number
+import network
 
 
 def init_dataset(rs, filename="diabetes.csv"):
@@ -72,9 +73,9 @@ def toInt(item, precision=1e12):
 
 def toFloat(item, precision=1e12):
     if isinstance(item, list):
-        return [toInt(x) for x in item]
+        return [toFloat(x) for x in item]
     else:
-        return float(item / precision)
+        return float(int(item) / precision)
 
 
 def toList(item):
@@ -85,3 +86,8 @@ def toList(item):
         return toList(item.tolist())
     elif isinstance(item, Number):
         return item
+
+
+def toNpArray(item):
+
+    return [np.array(x) for x in item]
