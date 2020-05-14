@@ -1,4 +1,4 @@
 {
-    "python.pythonPath": "/Users/omar_rifai/workspace/truffle/venv/bin/python3",
+    "python.pythonPath": "D:\\Python27\\python.exe",
     "python.formatting.provider": "autopep8"
 }
