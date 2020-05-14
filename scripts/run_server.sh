@@ -1,7 +1,8 @@
-@echo on
-call truffle compile
+#!/bin/bash
+set echo on
+truffle compile
 echo "Smart contracts compiled"
-call truffle migrate
+truffle migrate
 echo "Smart contracts migrated"
 echo "Will now start server"
-call flask run
+flask run
