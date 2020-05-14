@@ -9994,12 +9994,22 @@
         }
       },
       "links": {},
+<<<<<<< Updated upstream
       "address": "0xE71C84a6eD9EAa9a4E38CaD42a7D2E2352812C66",
       "transactionHash": "0xd5d0ebfe636d0bba23f09ab2fb5e25c59758fc8346ec2493d93950343789ec85"
     }
   },
   "schemaVersion": "3.1.0",
   "updatedAt": "2020-05-14T07:45:23.273Z",
+=======
+      "address": "0xA7aB50Ab89b0E0e0F6e7006794546b161C10cCCC",
+      "transactionHash": "0x37c732f71a1b54c981a02899edfe7b2e16fdcaf94b24b8d0a173264f08840afa"
+    }
+  },
+  "schemaVersion": "3.1.0",
+  "updatedAt": "2020-05-14T13:33:02.746Z",
+  "networkType": "ethereum",
+>>>>>>> Stashed changes
   "devdoc": {
     "methods": {}
   },

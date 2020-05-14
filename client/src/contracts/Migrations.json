@@ -888,7 +888,12 @@
   },
   "networks": {},
   "schemaVersion": "3.1.0",
+<<<<<<< Updated upstream
   "updatedAt": "2020-05-14T07:45:23.279Z",
+=======
+  "updatedAt": "2020-05-14T13:33:02.750Z",
+  "networkType": "ethereum",
+>>>>>>> Stashed changes
   "devdoc": {
     "methods": {}
   },

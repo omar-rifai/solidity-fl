@@ -15,7 +15,7 @@ const Results = ({ data, count }) => {
   useEffect(() => {
     console.log("charts props:", data);
     if (data.length != 0) {
-      local_data = data.results;
+      local_data = data[0];
     }
   });
 
@@ -23,7 +23,7 @@ const Results = ({ data, count }) => {
     <LineChart
       width={500}
       height={300}
-      data={data.results}
+      data={data[0]}
       margin={{
         top: 5,
         right: 30,

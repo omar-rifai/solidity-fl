@@ -44,8 +44,18 @@ async function simulateLocal(e, contract, accounts, setState, count) {
   await fetch("/get_results")
     .then(res => res.json())
     .then(data => {
-      results = data;
+      if(results.length==0){
+        let key = Object.key
+        let datas = Object.values(data);
+        for(var k in datas){
+          results.push(datas[k]);
+        }
+      }
+      else{
+        results = results.concat(Object.values(data));
+      }
     });
+    console.log(results);
   setState(count + 1);
 }
 
