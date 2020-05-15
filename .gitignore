@@ -2,3 +2,10 @@ venv
 client/node_modules/
 client/package-lock.json
 .vscode/settings.json
+package-lock.json
+node_modules
+client/src/contracts/
+server/__pycache__/
+env
+client/package-lock.json
+

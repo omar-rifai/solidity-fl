@@ -14,7 +14,7 @@
     "react-scripts": "^3.4.1",
     "recharts": "^1.8.5",
     "truffle-hdwallet-provider": "^1.0.17",
-    "web3": "1.2.2"
+    "web3": "^1.2.2"
   },
   "proxy": "http://localhost:5000/",
   "scripts": {

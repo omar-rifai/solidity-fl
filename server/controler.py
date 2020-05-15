@@ -23,8 +23,7 @@ def init_networks(n_input_network, n_output_network, hidden_layers_sizes, n_edge
     # initialize networks
     edge_nets = []
     for i in range(n_edges):
-        edge_nets.append(nn.Network(
-            [n_inputs_network, *hidden_layers_sizes, n_outputs_network]))
+        edge_nets.append(nn.Network([n_inputs_network, *hidden_layers_sizes, n_outputs_network]))
     return edge_nets
 
 
