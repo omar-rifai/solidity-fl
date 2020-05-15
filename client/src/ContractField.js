@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Chart from "./Charts";
 
-let results = [];
+let results = []
 let params = [];
 
 const useStyles = makeStyles({
@@ -44,16 +44,13 @@ async function simulateLocal(e, contract, accounts, setState, count) {
   await fetch("/get_results")
     .then(res => res.json())
     .then(data => {
-      if(results.length==0){
-        let key = Object.key
-        let datas = Object.values(data);
-        for(var k in datas){
-          results.push(datas[k]);
-        }
+      if(results.length == 0 ){
+        results = { results : []}
       }
-      else{
-        results = results.concat(Object.values(data));
-      }
+      data.results.forEach(result => {
+        result.name = (parseInt(result.name, 10) + results.results.length).toString();
+      })  
+      results.results.push(...data.results);
     });
     console.log(results);
   setState(count + 1);
