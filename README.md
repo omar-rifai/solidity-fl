@@ -3,24 +3,26 @@
 
 This is a prototype for running a federated learning algorithm using an Ethereum Smart Contract. The prototype has been implemented using the truffle suite and a Python Flask backend server for simulations.
 
-For client side libraries installation go to the client folder and type
+You can use the intialization script by running launch_app.sh. Otherwise, make you can manually start the different processes as follows.
+
+Install the node dependencies both in the main folder and in the client folder by running (once for each):
 
 > npm install 
 
-After installing the required dependencies specified above, call inside the client directory:
-
-> npm start 
-
 In the main directory, to start the python backend server call:
-
+> pip install requirements.txt
 > flask run
 
-For running a developpement blockchain call:
+Then, run a developpement blockchain using truffle:
 > truffle develop 
 
-Then, in a seperate terminal for deploying the smart contracts:
+In a seperate terminal deploy the smart contracts:
 
 >truffle compile; truffle migrate
+
+Finally, to run the react-based client, in the client folder:
+
+> npm start 
 
 ##Requirements
 
