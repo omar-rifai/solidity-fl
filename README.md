@@ -25,6 +25,7 @@ Then, in a seperate terminal for deploying the smart contracts:
 ##Requirements
 
 This code has been tested with Node version 12.16.1
+
 Make sure that a mongodb service is running in the background
 
 
