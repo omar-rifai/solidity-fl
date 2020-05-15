@@ -13,7 +13,7 @@ const Results = ({ data, count }) => {
   // Similar to componentDidMount and componentDidUpdate:
 
   useEffect(() => {
-    console.log("charts props:", data);
+    console.log("charts props:", data.results);
     if (data.length != 0) {
       local_data = data.results;
     }
