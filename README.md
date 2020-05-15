@@ -3,7 +3,7 @@
 
 This is a prototype for running a federated learning algorithm using an Ethereum Smart Contract. The prototype has been implemented using the truffle suite and a Python Flask backend server for simulations.
 
-You can use the intialization script by running launch_app.sh. Otherwise, make you can manually start the different processes as follows.
+You can use the intialization script by running launch_app.sh. Otherwise, you can manually start the different processes as follows.
 
 Install the node dependencies both in the main folder and in the client folder by running (once for each):
 
