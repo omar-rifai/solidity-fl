@@ -47,7 +47,6 @@ def runStageAPI():
     db_edges = db.networks.find_one({"s": s})
     db_data = db.data.find_one({'s': s})
 
-    n_global_updates = db_params["n_global_updates"]
     n_local_updates = db_params["n_local_updates"]
     edge_nets_list = db_edges["edge_nets"]
     edge_data = db_edges["edge_data"][0]

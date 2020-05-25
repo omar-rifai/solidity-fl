@@ -8,22 +8,27 @@ import {
   Tooltip,
   Legend
 } from "recharts";
-let local_data = [{}];
-const Results = ({ data, count }) => {
+const Results = ({ datapoints }) => {
+  const [result, setResult] = useState();
   // Similar to componentDidMount and componentDidUpdate:
-
   useEffect(() => {
+<<<<<<< Updated upstream
     console.log("charts props:", data.results);
     if (data.length != 0) {
       local_data = data.results;
     }
+=======
+    console.log("charts props:", datapoints);
+    setResult(datapoints);
+    console.log("results updated");
+>>>>>>> Stashed changes
   });
 
   return (
     <LineChart
       width={500}
       height={300}
-      data={data.results}
+      data={datapoints}
       margin={{
         top: 5,
         right: 30,

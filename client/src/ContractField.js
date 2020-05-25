@@ -7,8 +7,13 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Chart from "./Charts";
 
+<<<<<<< Updated upstream
 let results = []
+=======
+//let results = [];
+>>>>>>> Stashed changes
 let params = [];
+let local_results = [];
 
 const useStyles = makeStyles({
   root: {
@@ -28,7 +33,7 @@ async function initializeState(e, contract, accounts) {
     .catch(console.log);
 }
 
-async function simulateLocal(e, contract, accounts, setState, count) {
+async function simulateLocal(e, contract, accounts, setResult, results) {
   //e.preventDefault();
   console.log("Local stochastic gradient descent");
 
@@ -44,6 +49,7 @@ async function simulateLocal(e, contract, accounts, setState, count) {
   await fetch("/get_results")
     .then(res => res.json())
     .then(data => {
+<<<<<<< Updated upstream
       if(results.length == 0 ){
         results = { results : []}
       }
@@ -54,6 +60,19 @@ async function simulateLocal(e, contract, accounts, setState, count) {
     });
     console.log(results);
   setState(count + 1);
+=======
+      if (results.length == 0) {
+        results = [];
+      }
+      data.results.forEach(pt => {
+        console.log(pt.name);
+        pt.name = (parseInt(pt.name, 10) + local_results.length).toString();
+      });
+      local_results.push(...data.results);
+      setResult([...local_results]);
+    });
+  console.log(results);
+>>>>>>> Stashed changes
 }
 
 async function simulateFederated(e, contract, accounts) {
@@ -110,7 +129,8 @@ async function simulateFederated(e, contract, accounts) {
 }
 
 const ClientField = props => {
-  let [count, setState] = useState();
+  const [count, setCount] = useState(0);
+  let [results, setResult] = useState([]);
   const classes = useStyles();
 
   return (
@@ -133,7 +153,7 @@ const ClientField = props => {
             margin: "10px"
           }}
           onClick={e =>
-            simulateLocal(e, props.instance, props.accounts, setState, count)
+            simulateLocal(e, props.instance, props.accounts, setResult, count)
           }
         >
           Run Local
@@ -177,7 +197,7 @@ const ClientField = props => {
           maxWidth: "400px"
         }}
       >
-        <Chart data={results} count={count}></Chart>
+        <Chart datapoints={results} count={count}></Chart>
       </CardContent>
     </Box>
   );
