@@ -48,7 +48,6 @@ async function simulateLocal(e, contract, accounts, setResult, results) {
         results = [];
       }
       data.results.forEach(pt => {
-        console.log(pt.name);
         pt.name = (parseInt(pt.name, 10) + local_results.length).toString();
       });
       local_results.push(...data.results);
