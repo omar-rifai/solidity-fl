@@ -53,7 +53,7 @@ async function simulateLocal(e, contract, accounts, setResult, results) {
       local_results.push(...data.results);
       setResult([...local_results]);
     });
-  console.log(results);
+  console.log("results in simulateLocal" + results);
 }
 
 async function simulateFederated(e, contract, accounts) {

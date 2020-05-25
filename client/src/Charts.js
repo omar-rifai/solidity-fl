@@ -28,7 +28,7 @@ const Results = ({ datapoints }) => {
       <Legend />
       <Line
         type="monotone"
-        dataKey="uv"
+        dataKey="acc"
         stroke="#8884d8"
         activeDot={{ r: 8 }}
       />

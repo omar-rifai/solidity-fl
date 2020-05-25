@@ -113,7 +113,7 @@ def getResultsAPI():
     results_list = []
 
     for i in range(n_samples):
-        results_list.append({'name': names[i], 'uv': vals[i]})
+        results_list.append({'name': names[i], 'acc': vals[i]})
 
     return {'results': results_list}
 
