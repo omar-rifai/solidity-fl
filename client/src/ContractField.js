@@ -7,11 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Chart from "./Charts";
 
-<<<<<<< Updated upstream
-let results = []
-=======
-//let results = [];
->>>>>>> Stashed changes
 let params = [];
 let local_results = [];
 
@@ -49,18 +44,6 @@ async function simulateLocal(e, contract, accounts, setResult, results) {
   await fetch("/get_results")
     .then(res => res.json())
     .then(data => {
-<<<<<<< Updated upstream
-      if(results.length == 0 ){
-        results = { results : []}
-      }
-      data.results.forEach(result => {
-        result.name = (parseInt(result.name, 10) + results.results.length).toString();
-      })  
-      results.results.push(...data.results);
-    });
-    console.log(results);
-  setState(count + 1);
-=======
       if (results.length == 0) {
         results = [];
       }
@@ -72,7 +55,6 @@ async function simulateLocal(e, contract, accounts, setResult, results) {
       setResult([...local_results]);
     });
   console.log(results);
->>>>>>> Stashed changes
 }
 
 async function simulateFederated(e, contract, accounts) {
