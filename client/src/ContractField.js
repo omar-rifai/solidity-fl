@@ -32,7 +32,9 @@ async function simulateLocal(e, contract, accounts, setResult, results) {
   //e.preventDefault();
   console.log("Local stochastic gradient descent");
 
-  await contract.methods.resetState().send({ gas: 5000000, from: accounts[0] });
+  await contract.methods
+    .resetState()
+    .send({ gas: 5000000000, from: accounts[0] });
 
   await fetch("/run_stage")
     .then(res => res.json())
@@ -53,7 +55,6 @@ async function simulateLocal(e, contract, accounts, setResult, results) {
       local_results.push(...data.results);
       setResult([...local_results]);
     });
-  console.log("results in simulateLocal" + results);
 }
 
 async function simulateFederated(e, contract, accounts) {
@@ -61,15 +62,16 @@ async function simulateFederated(e, contract, accounts) {
   console.log("Federation happening.");
   console.log(params);
 
-  for (var i = 0; i < 4; i++) {
+  for (var i = 0; i < 9; i++) {
+    console.log("storing value for user", i);
     await contract.methods
       .store_params(params.weights[i])
-      .send({ from: accounts[i + 1], gas: 5000000 });
+      .send({ from: accounts[i + 1], gas: 5000000000 });
   }
-
+  console.log("running aggregation in smart contract");
   const aggres = await contract.methods
     .run_agg()
-    .send({ gas: 5000000, from: accounts[0] });
+    .send({ gas: 500000000, from: accounts[0] });
   console.log("runagg:" + aggres);
 
   const weight_res = await contract.methods
@@ -77,10 +79,10 @@ async function simulateFederated(e, contract, accounts) {
     .call({ gas: 500000000, from: accounts[0] });
   console.log(weight_res);
 
-  for (var i = 0; i < 4; i++) {
+  for (var i = 0; i < 9; i++) {
     await contract.methods
       .store_params(params.biases[i])
-      .send({ from: accounts[i + 1], gas: 5000000 });
+      .send({ from: accounts[i + 1], gas: 500000000 });
   }
 
   const aggres2 = await contract.methods

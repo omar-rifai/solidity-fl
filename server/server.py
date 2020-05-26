@@ -22,10 +22,8 @@ db = client.nnetworks  # Select the database
 def call_init():
     s = 123
     n_global_updates = 1
-    n_edges = 15
     n_local_updates = 30
     testing_data, edge_nets, edge_data = controler.setup_simulation(s)
-    results_scenario = [[] for e in range(n_edges)]
     db.params.update({'s': s}, {'s': s, 'n_global_updates': n_global_updates,
                                 'n_local_updates': n_local_updates}, upsert=True)
     db.networks.update({'s': s},
@@ -94,8 +92,6 @@ def submitParamsAPI():
             w) for w in res_weights]
         edge_nets[e]["biases"] = [dp.toFloat(w)
                                   for w in res_biases]
-        print(edge_nets[0]["weights"])
-        print([dp.toFloat(w) for w in res_weights])
         db.networks.update({'s': s},
                            {'s': s, 'edge_nets': [e for e in edge_nets], 'edge_data': edge_data}, upsert=True)
 

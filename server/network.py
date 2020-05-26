@@ -161,7 +161,6 @@ def sigmoid(z):
     try:
         ret = 1.0/(1.0+np.exp(-z))
     except:
-        print(z)
         ret = 1.0/(1.0 + np.round(-z))
     """The sigmoid function."""
     return ret

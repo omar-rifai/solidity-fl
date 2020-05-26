@@ -15,7 +15,7 @@ federate = 0
 
 n_inputs_network = 8
 n_outputs_network = 1
-hidden_layers_sizes = [3, 2]
+hidden_layers_sizes = [32, 16]
 accuracy_scenarios = []
 
 
@@ -23,7 +23,8 @@ def init_networks(n_input_network, n_output_network, hidden_layers_sizes, n_edge
     # initialize networks
     edge_nets = []
     for i in range(n_edges):
-        edge_nets.append(nn.Network([n_inputs_network, *hidden_layers_sizes, n_outputs_network]))
+        edge_nets.append(nn.Network(
+            [n_inputs_network, *hidden_layers_sizes, n_outputs_network]))
     return edge_nets
 
 

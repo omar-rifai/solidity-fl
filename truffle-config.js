@@ -7,9 +7,7 @@ module.exports = {
   networks: {
     develop: {
       port: 7545,
-      gas: 5000000000
+      gas: 5000000000000
     }
   }
 };
-
-//dice theory resource quit gym tongue cousin trend wisdom develop nest minimum
