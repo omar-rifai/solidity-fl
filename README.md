@@ -11,6 +11,7 @@ Install the node dependencies both in the main folder and in the client folder b
 
 In the main directory, to start the python backend server call:
 > pip install requirements.txt
+
 > flask run
 
 Then, run a developpement blockchain using truffle:
