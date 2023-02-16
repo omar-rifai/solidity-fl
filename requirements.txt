@@ -64,6 +64,6 @@ scipy==0.13.0b1
 six==1.4.1
 typing==3.7.4.1
 vboxapi==1.0
-Werkzeug==1.0.1
+Werkzeug==2.2.3
 xattr==0.6.4
 zipp==1.2.0
